@@ -15,7 +15,7 @@ function App() {
             setGreetMsg(res)
         })
     }
-
+    console.log('App render')
     useEffect(() => {
         const map = new Map({
             id: 'map',
@@ -23,6 +23,10 @@ function App() {
             zoom: 10
         })
         map.loadMap('gaode')
+        map.addEvent('click', (e) => {
+            console.log(e.coordinate)
+            console.log('aaaaaaaaaaaaaaaaaa')
+        })
     }, [])
 
     return (
