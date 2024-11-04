@@ -3,11 +3,7 @@ import { Button, Dropdown, Form, Input, Radio, Space } from 'antd-mobile'
 import { invoke } from '@tauri-apps/api/core'
 import { useTranslation, withTranslation, Trans } from 'react-i18next'
 
-import Map from 'ol/Map.js'
-import View from 'ol/View.js'
-import TileLayer from 'ol/layer/Tile.js'
-import OSM from 'ol/source/OSM.js'
-import 'ol/ol.css'
+import Map from '@/common/map'
 
 function App() {
     const { t, i18n } = useTranslation()
@@ -22,18 +18,12 @@ function App() {
 
     useEffect(() => {
         const map = new Map({
-            target: 'map',
-            layers: [
-                new TileLayer({
-                    source: new OSM()
-                })
-            ],
-            view: new View({
-                center: [0, 0],
-                zoom: 2
-            })
+            id: 'map',
+            center: [120, 30],
+            zoom: 10
         })
-    })
+        map.loadMap('gaode')
+    }, [])
 
     return (
         <main className="container">
