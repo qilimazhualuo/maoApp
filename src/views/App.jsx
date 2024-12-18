@@ -1,23 +1,16 @@
 import React, { useState, useEffect } from 'react'
-import { Button, Dropdown, Form, Input, Radio, Space } from 'antd-mobile'
+import { NavBar } from 'antd-mobile'
 import { invoke } from '@tauri-apps/api/core'
-import { useTranslation, withTranslation, Trans } from 'react-i18next'
+import { Trans } from 'react-i18next'
 
 import Map from '@/common/map'
+import Scene from '@/common/three'
+import './App.less'
 
 function App() {
-    const { t, i18n } = useTranslation()
-    const [greetMsg, setGreetMsg] = useState('')
-    const [name, setName] = useState('')
-    console.log('App render')
-    const onFinish = () => {
-        invoke('greet', { name }).then((res) => {
-            setGreetMsg(res)
-        })
-    }
-    console.log('App render')
+    let map, scene
     useEffect(() => {
-        const map = new Map({
+        map = new Map({
             id: 'map',
             center: [120, 30],
             zoom: 10
@@ -25,39 +18,25 @@ function App() {
         map.loadMap('gaode')
         map.addEvent('click', (e) => {
             console.log(e.coordinate)
-            console.log('aaaaaaaaaaaaaaaaaa')
         })
+        scene = new Scene({
+            dom: 'scene',
+        })
+        scene.addBox({ width: 100, height: 100, depth: 100 })
+        scene.goView({ x: 0, y: 0, z: 0 }, 200)
+        return () => {
+            map && map.destroy()
+            scene && scene.destroy()
+        }
     }, [])
-
     return (
         <main className="container">
-            <Dropdown>
-                <Dropdown.Item key="1">
-                    <Radio.Group defaultValue="zhcn" onChange={(lang) => i18n.changeLanguage(lang)}>
-                        <Space style={{ padding: '16px' }} block>
-                            <Radio value="zhcn">中文</Radio>
-                            <Radio value="en">英文</Radio>
-                        </Space>
-                    </Radio.Group>
-                </Dropdown.Item>
-            </Dropdown>
-            <div>{t('title')}</div>
-            <Form
-                layout="horizontal"
-                onFinish={onFinish}
-                footer={
-                    <Button block type="submit" color="primary" size="large">
-                        提交
-                    </Button>
-                }
-            >
-                <Form.Header>水平布局表单</Form.Header>
-                <Form.Item label="Name">
-                    <Input id="greet-input" onChange={(val) => setName(val)} placeholder="Enter a name..." />
-                </Form.Item>
-            </Form>
-            <div>{greetMsg}</div>
-            <div style={{ height: '50vh' }} id="map"></div>
+            <NavBar
+                back={null}
+                right={<Trans i18nKey="title" />}
+            >猫猫</NavBar>
+            <div className="scene" id="map"></div>
+            <div className="scene" id="scene"></div>
         </main>
     )
 }

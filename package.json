@@ -8,7 +8,7 @@
     "build": "vite build",
     "preview": "vite preview",
     "tauri": "tauri",
-    "android": "tauri android dev --force-ip-prompt"
+    "android": "tauri android dev"
   },
   "dependencies": {
     "@tauri-apps/api": "^2",
