@@ -1,8 +1,22 @@
 .container {
     display: flex;
     flex-direction: column;
-    .scene {
+    position: relative;
+    .content {
         height: 20px;
         flex: 1 1 auto;
+        position: relative;
+        .sideNav {
+            position: absolute;
+            transition: transform 0.5s ease-in-out;
+            transform: translateX(-100%);
+            &.navVisible {
+                transform: translateX(0);
+            }
+        }
+        .scene {
+            height: 100%;
+        }
     }
+    
 }
