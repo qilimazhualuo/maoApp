@@ -3,7 +3,6 @@ import { NavBar, Button, SideBar } from 'antd-mobile'
 import { invoke } from '@tauri-apps/api/core'
 import { Trans } from 'react-i18next'
 
-import Map from '@/common/map'
 import Scene from '@/common/three'
 import './App.less'
 
@@ -14,7 +13,7 @@ function App() {
         scene = new Scene({
             dom: 'scene',
         })
-        scene.addBox({ width: 100, height: 100, depth: 100, color: "#fff000" })
+        scene.addBox({ width: 100, height: 100, depth: 100, color: "#fff0ff" })
         scene.goView({ x: 0, y: 0, z: 0 }, 200)
         return () => {
             scene && scene.dispose()
@@ -24,10 +23,15 @@ function App() {
         <main className="container">
             <NavBar
                 back={null}
-                right={<Button
-                    onClick={() => setNavVisible(!navVisible)}>
-                    <Trans i18nKey="title" />
-                </Button>}
+                right={
+                    <>
+                        <Button onClick={() => location.reload()}>刷新</Button>
+                        <Button
+                            onClick={() => setNavVisible(!navVisible)}>
+                            <Trans i18nKey="title" />
+                        </Button>
+                    </>
+                }
             >猫猫</NavBar>
             <div className="content">
                 <SideBar className={{ sideNav: true, navVisible }} >
